@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Streaming</title>
+    <link rel="icon" type="image/png" href="img/ChatGPT Image 17 avr. 2025, 03_49_48.png" />
+    <style>
+      /* Basic Styling */
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        margin: 0;
+        background-color: #121212;
+        background-image: ;
+        color: #fff;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Navbar */
+      .nav {
+        background-color: #000;
+        padding: 1rem;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+        transition: all 0.3s ease;
+      }
+
+      .nav .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav ul {
+        list-style: none;
+        display: flex;
+        gap: 15px;
+      }
+
+      .nav ul li a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .nav ul li a:hover {
+        color: #bbb;
+      }
+
+      /* Hero Section */
+    
+      .hero {
+       position: relative;
+       text-align: center;
+       overflow: hidden;
+       height: 70vh;
+      }
+
+      .hero-img {
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+       filter: grayscale(30%) brightness(0.6);
+       }
+
+      .hero-text {
+       position: absolute;
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%, -50%);
+       color: white;
+       z-index: 1;
+       animation: fadeIn 2s ease-out;
+       }
+
+     .hero-text h1 {
+       font-size: 3rem;
+       margin-bottom: 10px;
+       }
+
+     .hero-text p {
+       font-size: 1.2rem;
+       }
+
+
+      
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Content Section */
+      .content {
+        padding: 20px;
+        text-align: center;
+        background-color: #121212;
+      }
+
+      .content h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: white;
+      }
+
+      .albums {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+        animation: fadeIn 2s ease-out;
+      }
+
+      .album {
+        width: 200px;
+        margin: 10px;
+        text-align: center;
+        transition: transform 0.3s ease;
+        color: white;
+      }
+
+      .album:hover {
+        transform: scale(1.05);
+      }
+
+      .album img {
+        width: 100%;
+        height: 200px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        transition: box-shadow 0.3s ease;
+      }
+
+      .album:hover img {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      }
+
+      .album h3 {
+        font-size: 1.2rem;
+        margin-top: 10px;
+      }
+
+      .album p {
+        font-size: 1rem;
+        color: #bbb;
+      }
+
+      .album button {
+        background-color: #000;
+        color: white;
+        border: none;
+        padding: 10px;
+        margin-top: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .album button:hover {
+        background-color: #333;
+      }
+
+      /* Search Section */
+      .search-section {
+        margin: 30px 0;
+        text-align: center;
+      }
+
+      .search-bar {
+        width: 50%;
+        padding: 15px;
+        font-size: 1.2rem;
+        border: 2px solid #fff;
+        border-radius: 50px;
+        background-color: #333;
+        color: white;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .search-bar:focus {
+        border-color: #bbb;
+      }
+
+      .search-bar::placeholder {
+        color: #bbb;
+      }
+
+      .search-button {
+        padding: 12px 20px;
+        background-color: #000;
+        color: white;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 50px;
+        margin-left: 10px;
+        transition: background-color 0.3s ease;
+      }
+
+      .search-button:hover {
+        background-color: #444;
+      }
+
+      /* Music Player Section */
+      footer {
+        background-color: #000;
+        padding: 5px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align:center;
+      }
+
+      .player .controls button {
+        background-color: #000;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        color: white;
+        border: none;
+        padding: 5px;
+        margin: 1px;
+        cursor: pointer;
+        border-radius: 15px;
+        transition: background-color 0.3s ease;
+      }
+
+      .player .controls button:hover {
+        background-color: #333;
+      }
+
+      .player .controls button:disabled {
+        background-color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="nav">
+      <div class="container">
+        <a href="/">
+          <img src="img/ChatGPT Image 17 avr. 2025, 03_49_48.png" alt="Musicify Logo" style="height: 80px;" />
+        </a>        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#Artist">Artists</a></li>
+          <li><a href="#search">Search</a></li>
+          <li><a href="#Album">Album</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+<section class="hero">
+  <img src="img/heros.jpg" alt="Hero Image" class="hero-img">
+  <div class="hero-text">
+    <h1>Discover New Music</h1>
+    <p>Stream your favorite songs, albums, and playlists anytime, anywhere.</p>
+  </div>
+</section>
+
+
+    <!-- Search Section -->
+    <section class="search-section" id="search">
+      <h2>Find Your Favorite Music</h2>
+      <div>
+        <input type="text" class="search-bar" placeholder="Search for artists, albums, or songs..." />
+        <button class="search-button">Search</button>
+      </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content" id="Artist">
+      <h2>Popular Artists</h2>
+      <div class="albums">
+        <div class="album">
+          <img src="img/1.jpg" alt="Album 1" />
+          <p>Cosmic Tears</p>
+        </div>
+        <div class="album">
+          <img src="img/2.jpg" alt="Album 2" />
+          <p>Fade Into Sound</p>
+        </div>
+        <div class="album">
+          <img src="img/3.jpg" alt="Album 3" />
+          <p>Lost in the Echo </p>
+        </div>
+      </div>
+    </section>
+ <!-- Content Section -->
+ <section class="content" id="Album">
+  <h2>Popular Albums</h2>
+  <div class="albums">
+    <div class="album">
+      <img src="img/5bb11bcdf791118af7456a45373fdcc3.jpg" alt="Album 1" />
+      <h3>Album Title</h3>
+      <p>Artist Name</p>
+      <button onclick="playSong('music/7.m4A')">Play</button>
+    </div>
+    <div class="album">
+      <img src="img/d0b4d7498f5fdc8b0f460ce1e17a1296.jpg" alt="Album 2" />
+      <h3>Album Title</h3>
+      <p>Artist Name</p>
+      <button onclick="playSong('music/3.m4A')">Play</button>
+    </div>
+    <div class="album">
+      <img src="img/f7a495a66437c943a64b77d45bb078eb.jpg" alt="Album 3" />
+      <h3>Album Title</h3>
+      <p>Artist Name</p>
+      <button onclick="playSong('music/2.m4A')">Play</button>
+    </div>
+  </div>
+</section>
+ <!-- Content Section -->
+ <section class="content">
+  <h2>Popular songs</h2>
+  <div class="albums">
+    <div class="album">
+      <img src="img/f7a495a66437c943a64b77d45bb078eb.jpg" alt="Album 1" />
+      <h3>Cosmic Tears</h3>
+      <p>Zaynix </p>
+      <button onclick="playSong('music/1.m4A')">Play</button>
+    </div>
+    <div class="album">
+      <img src="img/f13bd7c1374d93a8ea5560f248e28f94.jpg" alt="Album 2" />
+      <h3>Shadow Dancer</h3>
+      <p>Kairo Beat  </p>
+      <button onclick="playSong('music/9.m4A')">Play</button>
+    </div>
+    <div class="album">
+      <img src="img/c657ea031b1f71ba917d5480db049ed1.jpg" alt="Album 3" />
+      <h3>Dreams in Reverse </h3>
+      <p>Synth Mirage </p>
+      <button onclick="playSong('music/10.m4A')">Play</button>
+    </div>
+  </div>
+</section>
+ <!-- Content Section -->
+ <section class="content">
+  <div class="albums">
+    <div class="album">
+      <img src="img/745f77102a671b81c7df3df0e361726d.jpg" alt="Album 1" />
+      <h3>Echoes of Mars</h3>
+      <p>Nova Ray</p>
+      <button onclick="playSong('song1.mp3')">Play</button>
+    </div>
+    <div class="album">
+      <img src="img/df54609671ee40d6fffec96c559431cc.jpg" alt="Album 2" />
+      <h3>Velvet Skies</h3>
+      <p>Luna Mirage</p>
+    </div>
+    <div class="album">
+      <img src="img/365688a686a45bb0390e50fa392c3036.jpg" alt="Album 3" />
+      <h3>Neon Sands</h3>
+      <p>Zayn Solaris</p>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Music Player Section -->
+    <footer>
+      <div class="player">
+        <p>Now Playing: <span id="current-song">None</span></p>
+        <div class="controls">
+          <button onclick="play()">Play</button>
+          <button onclick="pause()">Pause</button>
+          <button onclick="next()">Next</button>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Sticky Navbar
+      window.onscroll = function () {
+        const nav = document.querySelector('.nav');
+        if (window.scrollY > 50) {
+          nav.classList.add('sticky');
+        } else {
+          nav.classList.remove('sticky');
+        }
+      };
+
+      // JavaScript for the music player
+      let currentSong = null;
+      const songElement = document.getElementById('current-song');
+      const audio = new Audio();
+
+      function playSong(song) {
+        audio.src = song;
+        audio.play();
+        songElement.innerText = song;
+        currentSong = song;
+      }
+
+      function play() {
+        if (currentSong) {
+          audio.play();
+        }
+      }
+
+      function pause() {
+        audio.pause();
+      }
+
+      function next() {
+        // Here you can add logic for skipping to the next song
+        songElement.innerText = "Next Song";
+      }
+    </script>
+  </body>
+</html>

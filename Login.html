@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style_login.css" />
+  <title>Login</title>
+  <link rel="icon" type="image/png" href="WEB/img/ChatGPT Image 17 avr. 2025, 03_49_48.png" />
+  <style>
+    body {
+      font-family: system-ui;
+      background-image: url('Web/img/heros.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      width: 300px;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.7rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #000000;
+      color: rgb(129, 129, 129);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background-color: #ffffff;
+    }
+
+    .footer {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .footer a {
+      color: #004793;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      margin-top: 10px;
+      color: rgb(145, 0, 0);
+    }
+
+    .success {
+      color: rgb(0, 75, 0);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form onsubmit="return validateLogin()">
+      <input type="email" name="username" placeholder="Username or Email" id="email" required />
+      <input type="password" name="password" placeholder="Password" id="password" required />
+      <button type="submit">Enter</button>
+    </form>
+    <div class="footer">
+      Don't you have an account? <a href="Sing.html">Sign up Now!</a>
+    </div>
+    <div id="message" class="message"></div>
+  </div>
+
+  <script>
+    function validateLogin() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const message = document.getElementById("message");
+
+      const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+      if (!emailPattern.test(email)) {
+        message.textContent = "Email or Username is invalid";
+        message.classList.remove("success");
+        return false;
+      }
+
+      if (password.length < 6) {
+        message.textContent = "Password is too short";
+        message.classList.remove("success");
+        return false;
+      }
+
+      message.textContent = "Welcome!";
+      message.classList.add("success");
+
+      // Redirect to the dashboard page
+      window.location.href = 'web/index.html'; // Ensure the path is correct
+      return false; // Prevent form submission
+    }
+  </script>
+</body>
+</html>
